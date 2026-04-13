@@ -142,6 +142,14 @@ function Test-PlaceholderRepoUrl {
     return $Value -match "YOUR-USERNAME"
 }
 
+function Assert-LastExitCode {
+    param([string]$Context)
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Context failed with exit code $LASTEXITCODE"
+    }
+}
+
 $context = Get-GitHubContext -Path $TokenFile
 $headers = @{
     Authorization = "Bearer $($context.Token)"
@@ -201,9 +209,12 @@ if (Test-PlaceholderRepoUrl -Value $cloneUrl) {
 git config --global --add safe.directory $repoRoot 2>$null
 
 cmd /c "git -C ""$repoRoot"" remote remove origin 1>nul 2>nul"
+Assert-LastExitCode -Context "git remote remove origin"
 git -C $repoRoot remote add origin $cloneUrl
+Assert-LastExitCode -Context "git remote add origin"
 
 $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$($context.Token)"))
 git -C $repoRoot -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic" push -u origin main
+Assert-LastExitCode -Context "git push"
 
 Write-Host "Pushed main to $cloneUrl"
