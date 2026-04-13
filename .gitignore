@@ -1,0 +1,10 @@
+build/
+build-*/
+.cache/
+.direnv/
+dist/
+result
+*.user
+*.qmlls.ini
+*.qtc_clangd
+*.qtc_clangd/*

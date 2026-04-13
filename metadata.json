@@ -1,0 +1,24 @@
+{
+  "id": "co.logos.node-inspector",
+  "name": "logos-node-inspector",
+  "displayName": "Node Inspector",
+  "version": "0.1.0",
+  "description": "Read-only Basecamp module for inspecting one Linux VPS that runs logos-node and nwaku.",
+  "entrypoint": "qrc:/qt/qml/Logos/NodeInspector/Main.qml",
+  "platforms": [
+    "linux",
+    "macos"
+  ],
+  "permissions": [
+    "network",
+    "process"
+  ],
+  "keywords": [
+    "logos",
+    "basecamp",
+    "inspector",
+    "operator",
+    "vps"
+  ]
+}
+

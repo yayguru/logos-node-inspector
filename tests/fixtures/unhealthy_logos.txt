@@ -1,0 +1,53 @@
+__NODE_INSPECTOR_SECTION__:HOST_BASICS
+ubuntu
+Linux 5.15.0-171-generic x86_64 GNU/Linux
+up 5 weeks
+__NODE_INSPECTOR_END_SECTION__:HOST_BASICS
+__NODE_INSPECTOR_SECTION__:ROOT_DF
+Filesystem 1B-blocks Used Available Use% Mounted on
+/dev/vda1 125829120000 68800000000 57029120000 55% /
+__NODE_INSPECTOR_END_SECTION__:ROOT_DF
+__NODE_INSPECTOR_SECTION__:MEMORY
+              total        used        free      shared  buff/cache   available
+Mem:     4046618624  1550000000   700000000     204800  1796413824  2000000000
+__NODE_INSPECTOR_END_SECTION__:MEMORY
+__NODE_INSPECTOR_SECTION__:DOCKER_SYSTEM_DF
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         2         429MB     0B (0%)
+Containers      2         2         4.8MB     0B (0%)
+__NODE_INSPECTOR_END_SECTION__:DOCKER_SYSTEM_DF
+__NODE_INSPECTOR_SECTION__:DOCKER_PS
+logos-node|logos-node:0.2.1|Up 3 hours (unhealthy)|0.0.0.0:8080->8080/tcp, 0.0.0.0:3000->3000/udp
+nwaku|wakuorg/nwaku:latest|Up 3 hours|0.0.0.0:8645->8645/tcp
+__NODE_INSPECTOR_END_SECTION__:DOCKER_PS
+__NODE_INSPECTOR_SECTION__:SERVICE_LOGOS_NODE
+name=logos-node
+running=true
+health=unhealthy
+restart=unless-stopped
+image=logos-node:0.2.1
+ports={"8080/tcp":[{"HostIp":"0.0.0.0","HostPort":"8080"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_LOGOS_NODE
+__NODE_INSPECTOR_SECTION__:SERVICE_NWAKU
+name=nwaku
+running=true
+health=none
+restart=unless-stopped
+image=wakuorg/nwaku:latest
+ports={"8645/tcp":[{"HostIp":"0.0.0.0","HostPort":"8645"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_NWAKU
+__NODE_INSPECTOR_SECTION__:NETWORK_INFO
+{"peer_id":"12D3KooWSbmKsjE9pQBhVfuhEiUFbTBPypfsNSF79XWDB62zk1nj","n_peers":57,"n_connections":57,"n_pending_connections":0}
+__NODE_INSPECTOR_END_SECTION__:NETWORK_INFO
+__NODE_INSPECTOR_SECTION__:CRYPTARCHIA_INFO
+__ERROR__:curl_failed
+__NODE_INSPECTOR_END_SECTION__:CRYPTARCHIA_INFO
+__NODE_INSPECTOR_SECTION__:LOGOS_NODE_LOGS
+2026-04-13T11:53:40Z INFO request{method=GET uri=/cryptarchia/info} started processing request
+2026-04-13T11:53:40Z INFO Requesting relay with Cryptarchia
+__NODE_INSPECTOR_END_SECTION__:LOGOS_NODE_LOGS
+__NODE_INSPECTOR_SECTION__:NWAKU_LOGS
+2026-04-13T11:53:44Z INFO status ok
+__NODE_INSPECTOR_END_SECTION__:NWAKU_LOGS

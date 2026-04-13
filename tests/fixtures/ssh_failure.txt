@@ -1,0 +1,1 @@
+ssh: connect to host 212.227.95.210 port 22: Permission denied

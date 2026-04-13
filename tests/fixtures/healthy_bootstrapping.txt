@@ -1,0 +1,57 @@
+__NODE_INSPECTOR_SECTION__:HOST_BASICS
+ubuntu
+Linux 5.15.0-171-generic x86_64 GNU/Linux
+up 4 weeks, 2 days, 1 hour
+__NODE_INSPECTOR_END_SECTION__:HOST_BASICS
+__NODE_INSPECTOR_SECTION__:ROOT_DF
+Filesystem 1B-blocks Used Available Use% Mounted on
+/dev/vda1 125829120000 74200000000 51629120000 59% /
+__NODE_INSPECTOR_END_SECTION__:ROOT_DF
+__NODE_INSPECTOR_SECTION__:MEMORY
+              total        used        free      shared  buff/cache   available
+Mem:     4046618624  1513093120   802947072    1239040  1730576384  2253205504
+Swap:             0           0           0
+__NODE_INSPECTOR_END_SECTION__:MEMORY
+__NODE_INSPECTOR_SECTION__:DOCKER_SYSTEM_DF
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         2         429MB     0B (0%)
+Containers      2         2         4.8MB     0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+__NODE_INSPECTOR_END_SECTION__:DOCKER_SYSTEM_DF
+__NODE_INSPECTOR_SECTION__:DOCKER_PS
+logos-node|logos-node:0.2.1|Up 2 hours (healthy)|0.0.0.0:8080->8080/tcp, 0.0.0.0:3000->3000/udp
+nwaku|wakuorg/nwaku:latest|Up 2 hours|0.0.0.0:8645->8645/tcp
+__NODE_INSPECTOR_END_SECTION__:DOCKER_PS
+__NODE_INSPECTOR_SECTION__:SERVICE_LOGOS_NODE
+name=logos-node
+running=true
+health=healthy
+restart=unless-stopped
+image=logos-node:0.2.1
+ports={"8080/tcp":[{"HostIp":"0.0.0.0","HostPort":"8080"}],"3000/udp":[{"HostIp":"0.0.0.0","HostPort":"3000"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_LOGOS_NODE
+__NODE_INSPECTOR_SECTION__:SERVICE_NWAKU
+name=nwaku
+running=true
+health=none
+restart=unless-stopped
+image=wakuorg/nwaku:latest
+ports={"8645/tcp":[{"HostIp":"0.0.0.0","HostPort":"8645"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_NWAKU
+__NODE_INSPECTOR_SECTION__:NETWORK_INFO
+{"listen_addresses":["/ip4/127.0.0.1/udp/3000/quic-v1","/ip4/172.19.0.2/udp/3000/quic-v1"],"peer_id":"12D3KooWSbmKsjE9pQBhVfuhEiUFbTBPypfsNSF79XWDB62zk1nj","n_peers":56,"n_connections":59,"n_pending_connections":3}
+__NODE_INSPECTOR_END_SECTION__:NETWORK_INFO
+__NODE_INSPECTOR_SECTION__:CRYPTARCHIA_INFO
+{"lib":"1820d270a382d5aff2cf3d2155802202aa01f375d49def8d2738fbe617d45978","tip":"9a59495ac32430660414e77cc312ab487012490e6e6ff2f069aaa506507e13ac","slot":373806,"height":20955,"mode":"Bootstrapping"}
+__NODE_INSPECTOR_END_SECTION__:CRYPTARCHIA_INFO
+__NODE_INSPECTOR_SECTION__:LOGOS_NODE_LOGS
+2026-04-13T14:13:56Z INFO tower_http::trace::on_response finished processing request latency=4 ms status=200
+2026-04-13T14:13:56Z INFO sync height=20955 slot=373806 mode=Bootstrapping
+__NODE_INSPECTOR_END_SECTION__:LOGOS_NODE_LOGS
+__NODE_INSPECTOR_SECTION__:NWAKU_LOGS
+2026-04-13T14:13:55Z INFO waku peerCount=31
+__NODE_INSPECTOR_END_SECTION__:NWAKU_LOGS
+

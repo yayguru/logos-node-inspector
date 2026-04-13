@@ -1,0 +1,53 @@
+__NODE_INSPECTOR_SECTION__:HOST_BASICS
+ubuntu
+Linux 5.15.0-171-generic x86_64 GNU/Linux
+up 5 weeks
+__NODE_INSPECTOR_END_SECTION__:HOST_BASICS
+__NODE_INSPECTOR_SECTION__:ROOT_DF
+Filesystem 1B-blocks Used Available Use% Mounted on
+/dev/vda1 125829120000 125829120000 0 100% /
+__NODE_INSPECTOR_END_SECTION__:ROOT_DF
+__NODE_INSPECTOR_SECTION__:MEMORY
+              total        used        free      shared  buff/cache   available
+Mem:     4046618624  1700000000   500000000     204800  1846413824  1800000000
+__NODE_INSPECTOR_END_SECTION__:MEMORY
+__NODE_INSPECTOR_SECTION__:DOCKER_SYSTEM_DF
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          4         4         1.9GB     0B (0%)
+Containers      4         4         25MB      0B (0%)
+__NODE_INSPECTOR_END_SECTION__:DOCKER_SYSTEM_DF
+__NODE_INSPECTOR_SECTION__:DOCKER_PS
+logos-node|logos-node:0.2.1|Up 4 weeks (unhealthy)|0.0.0.0:8080->8080/tcp, 0.0.0.0:3000->3000/udp
+nwaku|wakuorg/nwaku:latest|Up 5 weeks|0.0.0.0:8645->8645/tcp
+__NODE_INSPECTOR_END_SECTION__:DOCKER_PS
+__NODE_INSPECTOR_SECTION__:SERVICE_LOGOS_NODE
+name=logos-node
+running=true
+health=unhealthy
+restart=unless-stopped
+image=logos-node:0.2.1
+ports={"8080/tcp":[{"HostIp":"0.0.0.0","HostPort":"8080"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_LOGOS_NODE
+__NODE_INSPECTOR_SECTION__:SERVICE_NWAKU
+name=nwaku
+running=true
+health=none
+restart=unless-stopped
+image=wakuorg/nwaku:latest
+ports={"8645/tcp":[{"HostIp":"0.0.0.0","HostPort":"8645"}]}
+status=running
+__NODE_INSPECTOR_END_SECTION__:SERVICE_NWAKU
+__NODE_INSPECTOR_SECTION__:NETWORK_INFO
+{"peer_id":"12D3KooWSbmKsjE9pQBhVfuhEiUFbTBPypfsNSF79XWDB62zk1nj","n_peers":57,"n_connections":57,"n_pending_connections":0}
+__NODE_INSPECTOR_END_SECTION__:NETWORK_INFO
+__NODE_INSPECTOR_SECTION__:CRYPTARCHIA_INFO
+{"lib":"542762","tip":"19916f","slot":3531073,"height":185999,"mode":"Online"}
+__NODE_INSPECTOR_END_SECTION__:CRYPTARCHIA_INFO
+__NODE_INSPECTOR_SECTION__:LOGOS_NODE_LOGS
+2026-04-13T11:40:27Z INFO mode=Online height=185999
+__NODE_INSPECTOR_END_SECTION__:LOGOS_NODE_LOGS
+__NODE_INSPECTOR_SECTION__:NWAKU_LOGS
+2026-04-13T11:40:25Z INFO status ok
+__NODE_INSPECTOR_END_SECTION__:NWAKU_LOGS
+

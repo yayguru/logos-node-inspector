@@ -1,0 +1,12 @@
+* text=auto
+
+*.cpp text eol=lf
+*.h text eol=lf
+*.qml text eol=lf
+*.md text eol=lf
+*.nix text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+
