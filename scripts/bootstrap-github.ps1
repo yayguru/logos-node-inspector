@@ -200,7 +200,7 @@ if (Test-PlaceholderRepoUrl -Value $cloneUrl) {
 
 git config --global --add safe.directory $repoRoot 2>$null
 
-git -C $repoRoot remote remove origin 2>$null
+cmd /c "git -C ""$repoRoot"" remote remove origin 1>nul 2>nul"
 git -C $repoRoot remote add origin $cloneUrl
 
 $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$($context.Token)"))
