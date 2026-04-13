@@ -3,6 +3,7 @@ param(
     [string]$RepoName = "logos-node-inspector",
     [string]$Description = "Read-only Basecamp module for inspecting a single Logos VPS.",
     [string]$RepoUrl = "",
+    [switch]$ForceRemoteOverwrite,
     [switch]$Private
 )
 
@@ -150,6 +151,22 @@ function Assert-LastExitCode {
     }
 }
 
+function Write-NonFastForwardGuidance {
+    param([string]$CloneUrl)
+
+    Write-Host ""
+    Write-Host "The remote repository already contains commits that are not in your local branch." -ForegroundColor Yellow
+    Write-Host "This usually happens when the GitHub repo was initialized with a README, license, or .gitignore." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "If that remote history is disposable, re-run the script with:" -ForegroundColor Yellow
+    Write-Host "  -ForceRemoteOverwrite" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "That will use 'git push --force-with-lease' against:" -ForegroundColor Yellow
+    Write-Host "  $CloneUrl" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "If you want to keep the remote commit instead, fetch/rebase manually before pushing." -ForegroundColor Yellow
+}
+
 $context = Get-GitHubContext -Path $TokenFile
 $headers = @{
     Authorization = "Bearer $($context.Token)"
@@ -214,7 +231,29 @@ git -C $repoRoot remote add origin $cloneUrl
 Assert-LastExitCode -Context "git remote add origin"
 
 $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$($context.Token)"))
-git -C $repoRoot -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic" push -u origin main
-Assert-LastExitCode -Context "git push"
+$pushArgs = @(
+    "-C", $repoRoot,
+    "-c", "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic",
+    "push"
+)
+
+if ($ForceRemoteOverwrite) {
+    $pushArgs += "--force-with-lease"
+}
+
+$pushArgs += @("-u", "origin", "main")
+
+$pushOutput = & git @pushArgs 2>&1
+$pushExitCode = $LASTEXITCODE
+$pushOutput | ForEach-Object { Write-Host $_ }
+
+if ($pushExitCode -ne 0) {
+    $pushText = ($pushOutput | Out-String)
+    if (-not $ForceRemoteOverwrite -and ($pushText -match "fetch first" -or $pushText -match "non-fast-forward" -or $pushText -match "remote contains work")) {
+        Write-NonFastForwardGuidance -CloneUrl $cloneUrl
+    }
+
+    throw "git push failed with exit code $pushExitCode"
+}
 
 Write-Host "Pushed main to $cloneUrl"
