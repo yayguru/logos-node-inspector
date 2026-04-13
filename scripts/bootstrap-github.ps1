@@ -7,6 +7,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 function Get-GitHubContext {
     param([string]$Path)
@@ -197,10 +198,12 @@ if (Test-PlaceholderRepoUrl -Value $cloneUrl) {
     throw "The repository URL still contains the placeholder 'YOUR-USERNAME'. Replace it with your real GitHub username or pass -RepoUrl explicitly."
 }
 
-git remote remove origin 2>$null
-git remote add origin $cloneUrl
+git config --global --add safe.directory $repoRoot 2>$null
+
+git -C $repoRoot remote remove origin 2>$null
+git -C $repoRoot remote add origin $cloneUrl
 
 $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$($context.Token)"))
-git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic" push -u origin main
+git -C $repoRoot -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic" push -u origin main
 
 Write-Host "Pushed main to $cloneUrl"
