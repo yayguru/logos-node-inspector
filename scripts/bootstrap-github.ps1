@@ -131,6 +131,16 @@ function Write-TokenGuidance {
     Write-Host "If you want the script to create the repo for you, generate a token with the required permissions and try again." -ForegroundColor Yellow
 }
 
+function Test-PlaceholderRepoUrl {
+    param([string]$Value)
+
+    if (-not $Value) {
+        return $false
+    }
+
+    return $Value -match "YOUR-USERNAME"
+}
+
 $context = Get-GitHubContext -Path $TokenFile
 $headers = @{
     Authorization = "Bearer $($context.Token)"
@@ -181,6 +191,10 @@ if ($RepoUrl) {
             throw
         }
     }
+}
+
+if (Test-PlaceholderRepoUrl -Value $cloneUrl) {
+    throw "The repository URL still contains the placeholder 'YOUR-USERNAME'. Replace it with your real GitHub username or pass -RepoUrl explicitly."
 }
 
 git remote remove origin 2>$null
