@@ -170,6 +170,29 @@ function Write-NonFastForwardGuidance {
     Write-Host "If you want to keep the remote commit instead, fetch/rebase manually before pushing." -ForegroundColor Yellow
 }
 
+function Invoke-GitProcess {
+    param(
+        [string[]]$Arguments
+    )
+
+    $stdoutPath = [System.IO.Path]::GetTempFileName()
+    $stderrPath = [System.IO.Path]::GetTempFileName()
+
+    try {
+        $process = Start-Process -FilePath "git" -ArgumentList $Arguments -NoNewWindow -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath
+        $stdout = if (Test-Path -LiteralPath $stdoutPath) { Get-Content -LiteralPath $stdoutPath } else { @() }
+        $stderr = if (Test-Path -LiteralPath $stderrPath) { Get-Content -LiteralPath $stderrPath } else { @() }
+
+        return @{
+            ExitCode = $process.ExitCode
+            StdOut = @($stdout)
+            StdErr = @($stderr)
+        }
+    } finally {
+        Remove-Item -LiteralPath $stdoutPath, $stderrPath -Force -ErrorAction SilentlyContinue
+    }
+}
+
 $context = Get-GitHubContext -Path $TokenFile
 $headers = @{
     Authorization = "Bearer $($context.Token)"
@@ -246,8 +269,9 @@ if ($ForceRemoteOverwrite) {
 
 $pushArgs += @("-u", "origin", "main")
 
-$pushOutput = & git @pushArgs 2>&1
-$pushExitCode = $LASTEXITCODE
+$pushResult = Invoke-GitProcess -Arguments $pushArgs
+$pushOutput = @($pushResult.StdOut + $pushResult.StdErr)
+$pushExitCode = $pushResult.ExitCode
 $pushOutput | ForEach-Object { Write-Host $_ }
 
 if ($pushExitCode -ne 0) {
