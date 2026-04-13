@@ -52,3 +52,14 @@ The current UI is a workbench:
 - manual refresh only
 - lazy log pane
 - Linux-adjacent dark palette with restrained status accents
+
+## GitHub Bootstrap
+
+To publish the module to your GitHub account from Windows, use [scripts/bootstrap-github.ps1](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\scripts\bootstrap-github.ps1).
+
+The script can:
+
+- create the repository through the GitHub API when the token has enough permissions
+- or push to an already-created repository when `GitHubRepoUrl:` is present in `Foryouenv.txt`
+
+For fine-grained personal access tokens, repository creation via `POST /user/repos` requires repository `Administration: write`. If your token is limited to selected repositories, create the empty repository in the browser first, add `GitHubRepoUrl:` to `Foryouenv.txt`, and rerun the script.
