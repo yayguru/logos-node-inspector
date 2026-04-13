@@ -1,65 +1,106 @@
 # Logos Node Inspector
 
-`logos-node-inspector` is a read-only Basecamp module for inspecting a single Linux VPS that runs `logos-node` and `nwaku`.
+Logos Node Inspector is a Basecamp module for operators running a single Logos VPS. It gives you a clean, read-only workbench for checking `logos-node`, `nwaku`, host pressure, sync state, and recent logs without touching the remote machine.
 
-This first milestone is intentionally narrow:
+## Why It Exists
+
+Running a Logos node usually means switching between SSH, Docker, logs, and local API probes just to answer simple operational questions:
+
+- Is `logos-node` healthy?
+- Is the node syncing or stuck?
+- Is `nwaku` alive?
+- Is the VPS running out of disk or memory?
+- What should I check next when something degrades?
+
+This module pulls those checks into one Basecamp-native interface and keeps the interaction deliberately read-only.
+
+## Current Scope
+
+Version one is intentionally narrow:
 
 - one VPS
 - key-based SSH only
 - read-only collection
-- Logos-first health views for `/network/info` and `/cryptarchia/info`
-- operational guidance without remote mutation
+- manual refresh only
+- Logos-aware health checks for `/network/info` and `/cryptarchia/info`
+- no restart, prune, cleanup, or remote file mutation actions
 
-## What It Collects
+## What The Module Shows
 
-The module uses the system `ssh` client to execute a curated, read-only shell bundle on the remote VPS and parses the result into typed state for the UI.
+- `Overview`: node health, sync mode, peers, disk, containers, last refresh
+- `Logos`: peer id, mode, height, slot, lib, tip, endpoint reachability
+- `Services`: `logos-node` and `nwaku` container state, health, restart policy, ports, image
+- `Host`: kernel, uptime, disk usage, memory usage, Docker disk summary
+- `Recommendations`: short operator guidance with copyable read-only commands
+- `Logs`: capped recent logs for `logos-node` and `nwaku`
+- `Connection`: single-profile SSH configuration for the target VPS
 
-Collected signals:
+## How It Works
+
+The module runs locally inside Basecamp and uses the system `ssh` client to execute a curated read-only command bundle on the VPS. It then parses the result into typed state for the UI.
+
+Collected signals include:
 
 - host basics: hostname, kernel, uptime
 - host health: root disk usage, memory usage, Docker disk summary
 - service health: `docker ps`, `docker inspect` for `logos-node` and `nwaku`
 - Logos runtime: `http://127.0.0.1:<apiPort>/network/info`
 - Logos runtime: `http://127.0.0.1:<apiPort>/cryptarchia/info`
-- recent service logs for `logos-node` and `nwaku`
+- recent logs for `logos-node` and `nwaku`
 
-## Project Layout
+## Interface Direction
 
-- [module.yaml](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\module.yaml): module scaffold for `logos-module-builder`
-- [flake.nix](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\flake.nix): Nix entry point for Logos module packaging
-- [metadata.json](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\metadata.json): Basecamp package metadata
-- [CMakeLists.txt](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\CMakeLists.txt): Qt/QML build and tests
-- [src](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\src): parser, classifier, SSH collector, controller
-- [qml](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\qml): Basecamp-facing UI
-- [scripts/inspect-logos-vps.sh](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\scripts\inspect-logos-vps.sh): manual collector reference
-- [tests](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\tests): fixture-driven parser and classification coverage
-- [docs/ubuntu-basecamp-checklist.md](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\docs\ubuntu-basecamp-checklist.md): Ubuntu 24.04 build/load checklist for Basecamp validation
+The UI is designed as a quiet operator workbench rather than a glossy dashboard:
 
-## Development Notes
-
-This workspace is Windows-based and does not include the Logos/Basecamp Linux runtime, Qt toolchain, or Nix stack needed to build a `.lgx` artifact here end-to-end. The code is structured for Linux/macOS Basecamp packaging, but Linux-side validation still needs to happen in a Logos-compatible environment.
-
-The parser and classification logic are kept independent from the UI layer so they can be tested with captured fixture output.
-
-## Linux Validation
-
-Use the Ubuntu guide in [docs/ubuntu-basecamp-checklist.md](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\docs\ubuntu-basecamp-checklist.md) for the first full Basecamp run.
-
-The current UI is a workbench:
-
-- fixed left rail navigation
+- dark neutral surfaces
+- no gradients
+- no pure black or pure white
+- muted status colors instead of generic neon health states
+- strict invisible grid and dense alignment
 - one active pane at a time
-- manual refresh only
-- lazy log pane
-- Linux-adjacent dark palette with restrained status accents
+- lazy loading for heavier views such as logs
 
-## GitHub Bootstrap
+## Project Structure
 
-To publish the module to your GitHub account from Windows, use [scripts/bootstrap-github.ps1](C:\Users\gadin\Desktop\temporal\logosnodehostinger\logos-node-inspector\scripts\bootstrap-github.ps1).
+- [`module.yaml`](./module.yaml): module scaffold for Logos packaging
+- [`flake.nix`](./flake.nix): Nix entry point for building the package
+- [`metadata.json`](./metadata.json): Basecamp package metadata
+- [`CMakeLists.txt`](./CMakeLists.txt): Qt/QML build and test entry point
+- [`src`](./src): parser, classifier, SSH collector, controller
+- [`qml`](./qml): Basecamp-facing UI
+- [`tests`](./tests): fixture-driven parser and classification coverage
+- [`scripts/inspect-logos-vps.sh`](./scripts/inspect-logos-vps.sh): manual reference collector
+- [`docs/ubuntu-basecamp-checklist.md`](./docs/ubuntu-basecamp-checklist.md): Ubuntu 24.04 build and validation guide
 
-The script can:
+## Build And Validation
 
-- create the repository through the GitHub API when the token has enough permissions
-- or push to an already-created repository when `GitHubRepoUrl:` is present in `Foryouenv.txt`
+Ubuntu 24.04 is the first-class validation target for this project.
 
-For fine-grained personal access tokens, repository creation via `POST /user/repos` requires repository `Administration: write`. If your token is limited to selected repositories, create the empty repository in the browser first, add `GitHubRepoUrl:` to `Foryouenv.txt`, and rerun the script.
+The expected flow is:
+
+1. Install Basecamp on Ubuntu.
+2. Clone this repository.
+3. Build the module with `nix build`.
+4. Load the generated package into Basecamp.
+5. Configure the VPS SSH profile.
+6. Run a manual refresh and validate the rendered state against the real node.
+
+Use the full checklist here:
+
+- [`docs/ubuntu-basecamp-checklist.md`](./docs/ubuntu-basecamp-checklist.md)
+
+## Development Status
+
+The current repository includes:
+
+- the module scaffold
+- the SSH collector and parser pipeline
+- typed status classification
+- the workbench-style QML interface
+- Windows-side GitHub bootstrap helpers for publishing the repo
+
+The remaining milestone is full Linux packaging and Basecamp validation in a real Ubuntu environment.
+
+## License
+
+MIT. See [`LICENSE`](./LICENSE).
