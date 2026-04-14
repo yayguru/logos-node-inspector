@@ -1,0 +1,7 @@
+{
+  "id": "co.logos.node-inspector",
+  "name": "@NODE_INSPECTOR_PACKAGE_NAME@",
+  "displayName": "Node Inspector",
+  "description": "Read-only Logos node inspector for operators running logos-node and nwaku.",
+  "version": "@PROJECT_VERSION@"
+}

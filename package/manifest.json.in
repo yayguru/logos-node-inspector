@@ -1,0 +1,14 @@
+{
+  "author": "yayguru",
+  "category": "misc",
+  "dependencies": [],
+  "description": "Read-only Logos node inspector for operators running logos-node and nwaku.",
+  "icon": "",
+  "main": {
+    "@NODE_INSPECTOR_VARIANT@": "Main.qml"
+  },
+  "manifestVersion": "0.1.0",
+  "name": "@NODE_INSPECTOR_PACKAGE_NAME@",
+  "type": "ui_qml",
+  "version": "@PROJECT_VERSION@"
+}

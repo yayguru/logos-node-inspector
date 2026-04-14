@@ -1,0 +1,4 @@
+import QtQuick
+import "./Logos/NodeInspector" as NodeInspector
+
+NodeInspector.Main { }
