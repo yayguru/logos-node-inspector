@@ -59,6 +59,14 @@ target_link_libraries(node_inspector_plugin PRIVATE
   node_inspector_model
 )
 
+install(TARGETS
+  node_inspector_plugin
+  node_inspector_pluginplugin
+  LIBRARY DESTINATION .
+  RUNTIME DESTINATION .
+  BUNDLE DESTINATION .
+)
+
 if(BUILD_TESTING)
   add_executable(test_remote_output_parser
     tests/test_remote_output_parser.cpp
