@@ -64,10 +64,6 @@ qt_add_qml_module(node_inspector_plugin
     qml/panes/ServicesPane.qml
 )
 
-set_target_properties(node_inspector_plugin PROPERTIES
-  PREFIX ""
-)
-
 target_link_libraries(node_inspector_plugin PRIVATE
   Qt6::Core
   Qt6::Gui
