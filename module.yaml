@@ -1,22 +1,17 @@
-name: node_inspector
-version: 0.1.0
-type: core
-category: operator
-display_name: Node Inspector
-description: >
-  Read-only Basecamp module for inspecting a single Linux VPS that runs
-  logos-node and nwaku.
-authors:
-  - gadin
-entrypoint: qrc:/qt/qml/Logos/NodeInspector/Main.qml
-permissions:
-  - network
-  - process
-nix:
-  runtime:
-    - openssh
-  build:
-    - cmake
-    - ninja
-    - pkg-config
-
+{
+  "name": "node_inspector",
+  "version": "0.1.0",
+  "type": "core",
+  "category": "operator",
+  "description": "Read-only Basecamp module for inspecting a single Linux VPS that runs logos-node and nwaku.",
+  "nix_packages": {
+    "runtime": [
+      "openssh"
+    ],
+    "build": [
+      "cmake",
+      "ninja",
+      "pkg-config"
+    ]
+  }
+}
