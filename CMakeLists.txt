@@ -26,7 +26,7 @@ target_include_directories(node_inspector_model PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-qt_add_qml_module(node_inspector_plugin
+qt_add_qml_module(node_inspector
   URI Logos.NodeInspector
   VERSION 1.0
   SOURCES
@@ -50,13 +50,13 @@ qt_add_qml_module(node_inspector_plugin
     qml/panes/ServicesPane.qml
 )
 
-set_target_properties(node_inspector_pluginplugin PROPERTIES
+set_target_properties(node_inspectorplugin PROPERTIES
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   BUNDLE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
-target_link_libraries(node_inspector_plugin PRIVATE
+target_link_libraries(node_inspector PRIVATE
   Qt6::Core
   Qt6::Gui
   Qt6::Qml
@@ -66,8 +66,8 @@ target_link_libraries(node_inspector_plugin PRIVATE
 )
 
 install(TARGETS
-  node_inspector_plugin
-  node_inspector_pluginplugin
+  node_inspector
+  node_inspectorplugin
   LIBRARY DESTINATION .
   RUNTIME DESTINATION .
   BUNDLE DESTINATION .
