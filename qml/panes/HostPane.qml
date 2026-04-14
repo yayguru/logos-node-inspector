@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Logos.NodeInspector 1.0
-
 ScrollView {
     id: root
 
@@ -81,4 +79,3 @@ ScrollView {
         }
     }
 }
-

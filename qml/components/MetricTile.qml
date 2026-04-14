@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Logos.NodeInspector 1.0
-
 Frame {
     id: root
 
@@ -59,4 +57,3 @@ Frame {
         }
     }
 }
-
