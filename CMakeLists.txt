@@ -64,6 +64,11 @@ qt_add_qml_module(node_inspector_plugin
     qml/panes/ServicesPane.qml
 )
 
+set_target_properties(node_inspector_plugin PROPERTIES
+  PREFIX ""
+  OUTPUT_NAME "node_inspector_plugin"
+)
+
 target_link_libraries(node_inspector_plugin PRIVATE
   Qt6::Core
   Qt6::Gui
@@ -95,6 +100,15 @@ install(FILES
   "${NODE_INSPECTOR_VARIANT_ROOT}/metadata.json"
   DESTINATION "variants/${NODE_INSPECTOR_VARIANT}"
 )
+
+install(CODE [[
+  set(node_inspector_qmldir "${CMAKE_INSTALL_PREFIX}/variants/linux-amd64/Logos/NodeInspector/qmldir")
+  if (EXISTS "${node_inspector_qmldir}")
+    file(READ "${node_inspector_qmldir}" node_inspector_qmldir_contents)
+    string(REPLACE "prefer :/qt/qml/Logos/NodeInspector/\n" "" node_inspector_qmldir_contents "${node_inspector_qmldir_contents}")
+    file(WRITE "${node_inspector_qmldir}" "${node_inspector_qmldir_contents}")
+  endif()
+]])
 
 install(CODE [[
   execute_process(
